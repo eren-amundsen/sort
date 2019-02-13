@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bubble Sort 冒泡排序</title>
+</head>
+<body>
+	
+	<script>
+		
+
+		// 冒泡排序
+		// 冒泡排序是所有排序算法中最简单的一个，也是运行效率(性能)最差的一个。
+		// 冒泡排序的原理：比较任何两个相邻的项，如果第一个比第二个大，则交换它们的位置。元素项向上移动至正确的顺序，就好像气泡升至表面，因此得名冒泡排序。
+
+		// 冒泡排序 时间复杂度为O（n^2），有两个优点：
+		// 1.“编程复杂度”很低，很容易写出代码；
+		// 2.具有稳定性，这里的稳定性是指原序列中相同元素的相对顺序仍然保持到排序后的序列，而堆排序、快速排序均不具有稳定性。
+
+		// 第二个for循环中，减去1再减去i的作用分别是：不需要和数组多出一位的元素比较，因为多出一个的元素并不存在、已经排序过的元素不需要再遍历排序
+
+		// 我们写一个最常规的冒泡排序
+		var array = [8,7,6,5,4,3,2,1];
+		console.log(array);
+		for(var i = 0; i < array.length; i++){
+			// console.log(array);
+			for(var j = 0; j < array.length - 1 - i; j++){
+				if(array[j] > array[j+1]){
+					var x = array[j];
+					array[j] = array[j+1];
+					array[j+1] = x;
+				}
+				// console.log(array);
+			}
+		}
+		console.log(array);
+		
+
+		// 书上的写法(其实一样)：
+		var bubbleSort = function () {
+			var length = array.length;
+			for(var i = 0;i < length; i++){
+				for(var j = 0; j < length - 1 -i; j++){
+					if(array[j] > array[j+1]]){
+						swap(j, j+1);
+					}
+				}
+			}
+		}
+
+		var swap = function(index1, index2){
+			var aux = array[index1];
+			array[index1] = array[index2];
+			array[index2] = aux;
+		}
+
+		bubbleSort();
+
+	</script>	
+
+</body>
+</html>

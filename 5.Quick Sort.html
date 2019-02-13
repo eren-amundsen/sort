@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Quick Sort 快速排序</title>
+</head>
+<body>
+  
+  <script>
+  
+    // 快速排序是最常用的排序算法了。它的复杂度为O(nlog^n)，且它的性能通常比其他的复杂度为O(nlog^n)的排序算法要好。和归并排序一样，快速排序也使用分治的方法，将原始数组分为较小的数组(但它没有像归并排序那样将它们分割开)。
+    // 快速排序比之前的算法较为复杂：
+    // 1.首先，从数组中选择中间一项作为主元。
+    // 2.创建两个指针，左边一个指向数组第一项，右边一个指向数组的最后一项。移动左指针直到我们找到一个比主元大的元素，接着，移动右指针直到找到一个比主元小的元素，然后交换它们，重复这个过程，直到左指针超过了右指针。这个过程将使得比主元小的值都排在主元之前，而比主元大的值都排在主元之后。这一步骤叫做划分操作。
+    // 3. 接着，算法对划分后的小数组(较主元小的值组成的子数组，以及较主元大的值组成的子数组)重复之前的两个步骤，直至数组已经完全排序。
+
+    // 实现快速排序：
+
+		var array = [8,7,6,5,4,3,2,1];
+    var quickSort = function(){
+      quick(array, 0, array.length - 1);
+    }
+
+    // 就像归并算法那样，开始我们声明一个主方法来调用递归函数，传递待排序数组，以及索引0及其最末的位置(因为我们要排整个数组，而不是一个子数组)作为参数。
+
+    var quick = function(array, left, right){
+      var index;
+      if(array.length > 1){
+        index = partition(array, left, right);
+        if(left < index -1){
+          quick(array, left, index -1);
+        }
+        if(index < right){
+          quick(array, index, right);
+        }
+      }
+    }
+
+    // 划分过程：
+    // 第一件要做的事情是选择主元(pivot)，有好几种方式。最简单的一种是选择数组的第一项(最左项)。然而，研究表明对于几乎已排序的数组，这不是最好的选择，它将导致该算法的最差表现。另外一种方式是随机选择一个数组或是中间项。
+    
+    var partition = function(array, left, right){
+      var pivot = array[Math.floor((right + left) / 2)],
+      i = left,
+      j = right;
+      while(i <= j){
+        while(array[i] < pivot){
+          i++;
+        }
+        while(array[j] > pivot){
+          j--;
+        }
+        if(i <= j){
+          swap(array, i ,j);
+          i++;
+          j--;
+        }
+      }
+      return i;
+    }
+
+		var swap = function(array, index1, index2){
+			// var aux = array[index1];
+			// array[index1] = array[index2];
+			// array[index2] = aux;
+
+      // 我们可以使用ES6来改写：
+      [array[index1], array[index2]] = [array[index2], array[index1]];
+		}
+
+    console.log(array);
+    quickSort();
+    console.log(array);
+
+
+
+
+    // 阮一峰老师也写了一个快速排序(在算法复杂度上是有问题的，不过更好理解，面试的时候如果面试官说到阮一峰版本的快速排序的问题，你可以指出它的复杂度是很差的)
+    
+    var array2 = [100, 50, 20, 37, 48, 35, 95];
+
+    var quickSort2 = function(arr) {
+
+    　　if (arr.length <= 1) { return arr; }
+
+    　　var pivotIndex = Math.floor(arr.length / 2);
+
+    　　var pivot = arr.splice(pivotIndex, 1)[0];
+
+    　　var left = [];
+
+    　　var right = [];
+
+    　　for (var i = 0; i < arr.length; i++){
+
+    　　　　if (arr[i] < pivot) {
+
+    　　　　　　left.push(arr[i]);
+
+    　　　　} else {
+
+    　　　　　　right.push(arr[i]);
+
+    　　　　}
+
+    　　}
+
+    　　return quickSort2(left).concat([pivot], quickSort2(right));
+
+    };
+
+    var results = quickSort2(array2);
+
+    console.log(results);
+
+  </script>
+
+</body>
+</html>

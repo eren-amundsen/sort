@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Heap Sort 堆排序</title>
+</head>
+<body>
+  
+  <script>
+  
+    // 堆排序也是一种很高效的算法，因其把数组当做二叉树来排序而得名。这个算法会根据以下信息，把数组当做二叉树来管理：
+    // 1.索引0是树的根节点
+    // 2.除根节点外，任意节点N的父节点是N/2;
+    // 3.节点L的左节点是2*L
+    // 4.节点R的右节点是2*R+1
+
+    var array = [3, 5, 1, 6, 4, 7, 2];
+
+    var heapSort = function(){
+      var heapSize = array.length;
+      buildHeap(array);
+      while(heapSize > 1){
+        heapSize--;
+        swap(array, 0, heapSize);
+        heapify(array, heapSize, 0);
+      }
+    }
+
+    var buildHeap = function(array){
+      var heapSize = array.length;
+      for(var i = Math.floor(array.length / 2); i >= 0; i--){
+        heapify(array, heapSize, i);
+      }
+    }
+
+    var heapify = function(array, heapSize, i){
+      var left = i * 2 + 1,
+      right = i * 2 + 2,
+      largest = i;
+      if(left < heapSize && array[left] > array[largest]){
+        largest = left;
+      }
+      if(right < heapSize && array[right] > array[largest]){
+        largest = right;
+      }
+      if(largest !== i){
+        swap(array, i, largest);
+        heapify(array, heapSize, largest);
+      }
+    }
+
+		var swap = function(array, index1, index2){
+      [array[index1], array[index2]] = [array[index2], array[index1]];
+		}
+
+    heapSort();
+    console.log(array);
+    
+  </script>
+
+</body>
+</html>

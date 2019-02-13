@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Merge Sort 归并排序</title>
+</head>
+<body>
+	
+	<script>
+		
+
+		// 归并排序
+		// 归并排序是第一个可以被实际使用的排序算法。它的性能不错，复杂度是O(nlog^n)
+		
+		// 归并排序是一种分治算法。其思想是将原数组切分成较小的数组，直到每个小数组只有一个位置，接着将小数组归并成较大的数组，直到最后只有一个排序完毕的大数组。
+
+		// 由于是分治法，归并排序也是递归的：
+		var array = [8,7,6,5,4,3,2,1];
+		var mergeSort = function (){
+			array = mergeSortRec(array);
+		}
+		var mergeSortRec = function(array){
+			var length = array.length;
+			if(length === 1){
+				return array;
+			}
+			var mid = Math.floor(length / 2),
+			left = array.slice(0, mid),
+			right = array.slice(mid, length);
+			return merge(mergeSortRec(left), mergeSortRec(right));
+		}
+
+		// 归并排序将一个大数组转化为多个小数组直到只有一个项。由于算法是递归的，我们需要一个停止条件，在这里此条件是判断书的长度是否为1.如果是，则直接返回这个数组，因为它已经排序了。
+		// 如果数组长度比1大，那么我们得将其分成小数组。为此，首先得到数组的中间位，找到后我们将数组分成两个小数组，分别叫做left和right。left数组由索引0至中间索引的元素组成，而right数组由中间索引至原数组最后一位的元素组成。
+
+		// 下面的步骤是调用merge函数，它负责合并和排序小数组来产生大数组，直到回到原数组并已经排序完成。为了不断将原数组分成小数组，我们得再次对left数组和right数组递归调用mergeSortRec，并同时作为参数传递给merge函数。
+		var merge = function(left, right){
+			var result = [],
+			il = 0,
+			ir = 0;
+			while(il < left.length && ir < right.length){
+				if(left[il] < right[ir]){
+					result.push(left[il++]);
+				}else {
+					result.push(right[ir++]);
+				}
+			}
+			while(il < left.length){
+				result.push(left[il++]);
+			}
+			while(ir < right.length){
+				result.push(rigth[ir++]);
+			}
+			return result;
+		}
+
+		// merge函数接受两个数组作为参数，并将它们归并至一个大数组。排序发生在归并过程中。具体请看《学习JavaScript数据结构与算法》。
+
+		console.log(array);
+		mergeSort();
+		console.log(array);
+
+	</script>	
+
+</body>
+</html>
